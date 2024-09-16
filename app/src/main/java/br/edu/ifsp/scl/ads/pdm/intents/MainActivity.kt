@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(amb.root)
 
+        setSupportActionBar(amb.toolbarTb)
+        supportActionBar?.apply {
+            title = getString(R.string.app_name)
+            subtitle = this@MainActivity.javaClass.canonicalName
+        }
+
         amb.entrarParametroBt.setOnClickListener {
 //            val parametroIntent = Intent(this, ParametroActivity::class.java)
 //            parametroIntent.putExtra(PARAMETRO_EXTRA, amb.parametroTv.text.toString())
