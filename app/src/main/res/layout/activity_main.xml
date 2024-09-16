@@ -4,24 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarTb"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/design_default_color_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/parametroTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nenhum_par_metro"
+        android:text="Nenhum parâmetro!"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarTb" />
 
     <Button
         android:id="@+id/entrarParametroBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/entrar_par_metro"
+        android:text="Entrar parâmetro"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/parametroTv"
         app:layout_constraintEnd_toEndOf="parent"
