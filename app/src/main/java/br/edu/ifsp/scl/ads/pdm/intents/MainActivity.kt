@@ -24,15 +24,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(amb.root)
 
         amb.entrarParametroBt.setOnClickListener {
-            val parametroIntent = Intent(this, ParametroActivity::class.java)
-            parametroIntent.putExtra(PARAMETRO_EXTRA, amb.parametroTv.text.toString())
-            startActivityForResult(parametroIntent, PARAMETRO_REQUEST_CODE)
+//            val parametroIntent = Intent(this, ParametroActivity::class.java)
+//            parametroIntent.putExtra(PARAMETRO_EXTRA, amb.parametroTv.text.toString())
+//            startActivityForResult(parametroIntent, PARAMETRO_REQUEST_CODE)
 
             Intent(this, ParametroActivity::class.java).apply {
                 amb.parametroTv.text.toString().let{
                     putExtra(PARAMETRO_EXTRA, it)
                 }
-                startActivityForResult(parametroIntent, PARAMETRO_REQUEST_CODE)
+                startActivityForResult(this, PARAMETRO_REQUEST_CODE)
             }
         }
     }
