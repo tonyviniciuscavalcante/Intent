@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(amb.toolbarTb)
         supportActionBar?.apply {
             title = getString(R.string.app_name)
-            subtitle = this@MainActivity.javaClass.canonicalName
+            subtitle = this@MainActivity.javaClass.simpleName
         }
 
         amb.entrarParametroBt.setOnClickListener {

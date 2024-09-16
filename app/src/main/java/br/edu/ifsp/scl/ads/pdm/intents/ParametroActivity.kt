@@ -17,6 +17,13 @@ class ParametroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(apb.root)
+
+        setSupportActionBar(apb.toolbarTb)
+        supportActionBar?.apply {
+            title = getString(R.string.app_name)
+            subtitle = this@ParametroActivity.javaClass.simpleName
+        }
+
         intent.getStringExtra(PARAMETRO_EXTRA)?.also{ parametro ->
             apb.parametroEt.setText(parametro)
         }
