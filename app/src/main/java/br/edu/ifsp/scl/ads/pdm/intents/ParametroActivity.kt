@@ -33,8 +33,9 @@ class ParametroActivity : AppCompatActivity() {
                 apb.parametroEt.text.toString().let {
                     putExtra(PARAMETRO_EXTRA, it)
                 }
-                setResult()
+                setResult(RESULT_OK, this)
             }
         }
+        finish()
     }
 }
