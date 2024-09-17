@@ -35,17 +35,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         parl = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            object: ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult) {
-                    if (result.resultCode == RESULT_OK) {
-                        result.data?.getStringExtra(PARAMETRO_EXTRA)?.let {
-                            amb.parametroTv.text = it
-                        }
-                    }
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.getStringExtra(PARAMETRO_EXTRA)?.let {
+                    amb.parametroTv.text = it
                 }
             }
-        )
+        }
 
         amb.entrarParametroBt.setOnClickListener {
 //            val parametroIntent = Intent(this, ParametroActivity::class.java)
@@ -56,17 +53,18 @@ class MainActivity : AppCompatActivity() {
                 amb.parametroTv.text.toString().let{
                     putExtra(PARAMETRO_EXTRA, it)
                 }
-                startActivityForResult(this, PARAMETRO_REQUEST_CODE)
+                parl.launch(this)
+                // startActivityForResult(this, PARAMETRO_REQUEST_CODE)
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PARAMETRO_REQUEST_CODE && resultCode == RESULT_OK) {
-            data?.getStringExtra(PARAMETRO_EXTRA)?.let { retorno ->
-                amb.parametroTv.text = retorno
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PARAMETRO_REQUEST_CODE && resultCode == RESULT_OK) {
+//            data?.getStringExtra(PARAMETRO_EXTRA)?.let { retorno ->
+//                amb.parametroTv.text = retorno
+//            }
+//        }
+//    }
 }
