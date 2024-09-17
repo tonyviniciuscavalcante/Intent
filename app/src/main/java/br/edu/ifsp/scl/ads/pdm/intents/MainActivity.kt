@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 //            parametroIntent.putExtra(PARAMETRO_EXTRA, amb.parametroTv.text.toString())
 //            startActivityForResult(parametroIntent, PARAMETRO_REQUEST_CODE)
 
-            Intent(this, ParametroActivity::class.java).apply {
+            Intent("MINHA_ACTION_PARA_PROXIMA_TELA").apply {
                 amb.parametroTv.text.toString().let{
                     putExtra(PARAMETRO_EXTRA, it)
                 }
