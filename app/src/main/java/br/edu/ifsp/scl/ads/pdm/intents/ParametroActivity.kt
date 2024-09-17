@@ -27,5 +27,14 @@ class ParametroActivity : AppCompatActivity() {
         intent.getStringExtra(PARAMETRO_EXTRA)?.also{ parametro ->
             apb.parametroEt.setText(parametro)
         }
+
+        apb.enviarParametroBt.setOnClickListener{
+            Intent().apply {
+                apb.parametroEt.text.toString().let {
+                    putExtra(PARAMETRO_EXTRA, it)
+                }
+                setResult()
+            }
+        }
     }
 }
