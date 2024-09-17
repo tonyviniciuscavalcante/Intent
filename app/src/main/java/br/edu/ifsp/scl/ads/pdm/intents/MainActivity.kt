@@ -42,4 +42,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PARAMETRO_REQUEST_CODE && resultCode == RESULT_OK) {
+            data?.getStringExtra(PARAMETRO_EXTRA)?.let { retorno ->
+                amb.parametroTv.text = retorno
+            }
+        }
+    }
 }
