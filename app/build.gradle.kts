@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "br.edu.ifsp.scl.ads.pdm.intents"
-    compileSdk = 34
+    compileSdk = 23
 
     defaultConfig {
         applicationId = "br.edu.ifsp.scl.ads.pdm.intents"
@@ -36,6 +36,10 @@ android {
     viewBinding {
         enable = true
     }
+    dependenciesInfo {
+        includeInBundle = true
+    }
+    buildToolsVersion = "35.0.0"
 }
 
 dependencies {
