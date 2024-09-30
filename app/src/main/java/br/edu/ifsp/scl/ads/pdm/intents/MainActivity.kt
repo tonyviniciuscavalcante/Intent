@@ -1,6 +1,9 @@
 package br.edu.ifsp.scl.ads.pdm.intents
 
 import android.content.Intent
+import android.content.Intent.ACTION_DIAL
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -62,9 +65,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item.itemId) {
-            R.id.viewMi -> { true }
+            R.id.viewMi -> {
+                Uri.parse(amb.parametroTv.text.toString()).let {
+                    Intent(ACTION_VIEW, it).apply {
+                        startActivity(this)
+                    }
+                }
+                true
+            }
             R.id.callMi -> { true }
-            R.id.dialMi -> { true }
+            R.id.dialMi -> {
+//                Jeito mais Java de fazer
+//                val telUri = Uri.parse("tel: ${amb.parametroTv.text}")
+//                val discarIntent = Intent(ACTION_DIAL)
+//                discarIntent.setData(telUri)
+//                startActivity(discarIntent)
+
+                Uri.parse("tel: ${amb.parametroTv.text}").let {
+                    Intent(ACTION_DIAL, it).apply {
+                        this.setData(it)
+                        startActivity(this)
+                    }
+                }
+                true
+            }
             R.id.pickMi -> { true }
             R.id.chooserMi -> { true }
             else -> { false }
