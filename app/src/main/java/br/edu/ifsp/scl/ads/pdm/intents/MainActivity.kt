@@ -3,6 +3,7 @@ package br.edu.ifsp.scl.ads.pdm.intents
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
@@ -59,4 +60,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item.itemId) {
+            R.id.viewMi -> { true }
+            R.id.callMi -> { true }
+            R.id.dialMi -> { true }
+            R.id.pickMi -> { true }
+            R.id.chooserMi -> { true }
+            else -> { false }
+        }
+    }
 }
