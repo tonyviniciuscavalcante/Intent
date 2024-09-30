@@ -1,6 +1,7 @@
 package br.edu.ifsp.scl.ads.pdm.intents
 
 import android.content.Intent
+import android.content.Intent.ACTION_CALL
 import android.content.Intent.ACTION_DIAL
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
@@ -73,17 +74,21 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-            R.id.callMi -> { true }
-            R.id.dialMi -> {
-//                Jeito mais Java de fazer
-//                val telUri = Uri.parse("tel: ${amb.parametroTv.text}")
-//                val discarIntent = Intent(ACTION_DIAL)
-//                discarIntent.setData(telUri)
-//                startActivity(discarIntent)
 
+            R.id.callMi -> {
+                Uri.parse("tel: ${amb.parametroTv.text}").let {
+                    Intent(ACTION_CALL, it).apply {
+                        data = it
+                        startActivity(this)
+                    }
+                }
+                true
+            }
+
+            R.id.dialMi -> {
                 Uri.parse("tel: ${amb.parametroTv.text}").let {
                     Intent(ACTION_DIAL, it).apply {
-                        this.setData(it)
+                        data = it
                         startActivity(this)
                     }
                 }
