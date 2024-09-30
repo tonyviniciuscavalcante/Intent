@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.ads.pdm.intents
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object Constantes {
         const val PARAMETRO_EXTRA = "PARAMETRO_EXTRA"
-        // const val PARAMETRO_REQUEST_CODE = 0
     }
 
     private lateinit var parl: ActivityResultLauncher<Intent>
@@ -45,26 +45,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         amb.entrarParametroBt.setOnClickListener {
-//            val parametroIntent = Intent(this, ParametroActivity::class.java)
-//            parametroIntent.putExtra(PARAMETRO_EXTRA, amb.parametroTv.text.toString())
-//            startActivityForResult(parametroIntent, PARAMETRO_REQUEST_CODE)
-
             Intent("MINHA_ACTION_PARA_PROXIMA_TELA").apply {
                 amb.parametroTv.text.toString().let{
                     putExtra(PARAMETRO_EXTRA, it)
                 }
                 parl.launch(this)
-                // startActivityForResult(this, PARAMETRO_REQUEST_CODE)
             }
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == PARAMETRO_REQUEST_CODE && resultCode == RESULT_OK) {
-//            data?.getStringExtra(PARAMETRO_EXTRA)?.let { retorno ->
-//                amb.parametroTv.text = retorno
-//            }
-//        }
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 }
