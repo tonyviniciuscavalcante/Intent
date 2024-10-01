@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var parl: ActivityResultLauncher<Intent>
+    private lateinit var pcarl: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,16 @@ class MainActivity : AppCompatActivity() {
                 result.data?.getStringExtra(PARAMETRO_EXTRA)?.let {
                     amb.parametroTv.text = it
                 }
+            }
+        }
+
+        pcarl = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            permissaoConcedida ->
+            if (permissaoConcedida) {
+                // Chamar a chamada
+            }
+            else {
+                Toast.makeText(this, "Permissāo necessária!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -97,6 +109,15 @@ class MainActivity : AppCompatActivity() {
             R.id.pickMi -> { true }
             R.id.chooserMi -> { true }
             else -> { false }
+        }
+    }
+
+    private fun chamarOuDiscar(chamar: Boolean) {
+        Uri.parse("tel: ${amb.parametroTv.text}").let {
+            Intent(if (chamar) ACTION_CALL else ACTION_DIAL, it).apply {
+                data = it
+                startActivity(this)
+            }
         }
     }
 }
