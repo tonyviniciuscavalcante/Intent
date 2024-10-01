@@ -123,8 +123,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.chooserMi -> {
-                Uri.parse(amb.parametroTv.text.toString()).let {
-                    Intent(ACTION_VIEW, it).let { navegadorIntent ->
+                Uri.parse(amb.parametroTv.text.toString()).let { url ->
+                    Intent(ACTION_VIEW, url).let { navegadorIntent ->
                         val escolherAppIntent = Intent(ACTION_CHOOSER)
                         escolherAppIntent.putExtra(EXTRA_TITLE, "Escolha seu navegador!")
                         escolherAppIntent.putExtra(EXTRA_INTENT, navegadorIntent)
