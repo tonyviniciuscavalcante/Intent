@@ -1,11 +1,15 @@
 package br.edu.ifsp.scl.ads.pdm.intents
 
+import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.content.Intent.ACTION_CALL
 import android.content.Intent.ACTION_DIAL
+import android.content.Intent.ACTION_PICK
 import android.content.Intent.ACTION_VIEW
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var parl: ActivityResultLauncher<Intent>
     private lateinit var pcarl: ActivityResultLauncher<String>
+    private lateinit var piarl: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +46,8 @@ class MainActivity : AppCompatActivity() {
             subtitle = this@MainActivity.javaClass.simpleName
         }
 
-        parl = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
+        parl = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.getStringExtra(PARAMETRO_EXTRA)?.let {
                     amb.parametroTv.text = it
@@ -54,10 +58,19 @@ class MainActivity : AppCompatActivity() {
         pcarl = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             permissaoConcedida ->
             if (permissaoConcedida) {
-                // Chamar a chamada
+                chamarOuDiscar(true)
             }
             else {
                 Toast.makeText(this, "Permissāo necessária!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        piarl = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            resultado ->
+            if (resultado.resultCode == RESULT_OK) {
+                resultado.data?.data?.let {
+                    Toast.makeText(this, "${it.path}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -77,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item.itemId) {
+        return when (item?.itemId) {
             R.id.viewMi -> {
                 Uri.parse(amb.parametroTv.text.toString()).let {
                     Intent(ACTION_VIEW, it).apply {
@@ -86,28 +99,28 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-
             R.id.callMi -> {
-                Uri.parse("tel: ${amb.parametroTv.text}").let {
-                    Intent(ACTION_CALL, it).apply {
-                        data = it
-                        startActivity(this)
-                    }
+                if (checkSelfPermission(CALL_PHONE) == PERMISSION_GRANTED) {
+                    chamarOuDiscar(true)
+                }
+                else {
+                    pcarl.launch(CALL_PHONE)
                 }
                 true
             }
-
             R.id.dialMi -> {
-                Uri.parse("tel: ${amb.parametroTv.text}").let {
-                    Intent(ACTION_DIAL, it).apply {
-                        data = it
-                        startActivity(this)
-                    }
-                }
+                chamarOuDiscar(false)
                 true
             }
-            R.id.pickMi -> { true }
+            R.id.pickMi -> {
+                val caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path
+                val pegarImagemIntent = Intent(ACTION_PICK)
+                pegarImagemIntent.setDataAndType(Uri.parse(caminho), "image/*")
+                piarl.launch(pegarImagemIntent)
+                true
+            }
             R.id.chooserMi -> { true }
+
             else -> { false }
         }
     }
