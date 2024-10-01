@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             resultado ->
             if (resultado.resultCode == RESULT_OK) {
                 resultado.data?.data?.let {
-                    Toast.makeText(this, "${it.path}", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(ACTION_VIEW, it))
                 }
             }
         }
